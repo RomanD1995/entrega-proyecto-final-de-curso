@@ -78,7 +78,7 @@ def cargar_y_limpiar_base_de_datos(ruta_entrada=RUTA_EXCEL_INICIAL):
             return None
 
         # Busca filas completamente iguales y conserva solo una copia de cada registro.
-        if datos_cargados.duplicated().sum() > 0:
+        #if datos_cargados.duplicated().sum() > 0:
             datos_cargados.drop_duplicates(inplace=True)
 
         # Intenta convertir cada fecha y reemplaza los valores no reconocidos por una fecha vacia.
