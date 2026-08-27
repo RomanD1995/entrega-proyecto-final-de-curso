@@ -1,0 +1,209 @@
+
+============================================================
+MANUAL DE USO Y DOCUMENTACIÓN DEL SISTEMA
+Sistema de Análisis de Salud Vehicular y Taller Hunter
+============================================================
+
+Estimado docente, evaluador y usuario:
+
+Reciba un cordial saludo. Mi nombre es Adonis Eloy Roman Dinarte y presento
+este sistema como parte de la entrega del trabajo final universitario.
+
+INTRODUCCIÓN
+------------
+El Sistema de Análisis de Salud Vehicular y Taller Hunter es una aplicación
+desarrollada en Python para analizar registros de servicios realizados a
+vehículos. Su propósito es transformar los datos del taller en información
+útil para evaluar la capacidad operativa, el estado general de los vehículos,
+el comportamiento por marca y la demanda de servicios secundarios.
+
+El sistema utiliza un menú en consola y genera gráficos con Matplotlib. Antes
+del análisis, los datos son cargados, limpiados y preparados para reducir
+errores de formato y facilitar la interpretación de los resultados.
+
+1. OBJETIVOS Y FUNCIONALIDADES
+------------------------------
+El proyecto permite:
+
+- Calcular la capacidad teórica y la carga diaria de la rampa.
+- Obtener el porcentaje de vehículos aprobados, rechazados y no clasificados.
+- Comparar el estado de los vehículos por marca.
+- Analizar llantas nuevas, balanceo y pinchaduras por tipo de vehículo.
+- Generar gráficos de los principales indicadores del taller.
+- Preparar un archivo CSV limpio para su revisión en Excel.
+
+2. ARCHIVOS DEL PROYECTO
+------------------------
+base_datos_taller.xlsx
+    Archivo principal con los registros originales del taller. Debe ubicarse
+    en la carpeta principal del proyecto.
+
+registros_taller_procesado.csv
+    Archivo generado después de la limpieza. También puede utilizarse como
+    fuente de respaldo cuando no esté disponible el archivo Excel.
+
+app_analisis_de_servicios.py/
+    Carpeta que contiene el programa principal y sus módulos de análisis.
+
+3. DESCRIPCIÓN DE LOS SCRIPTS
+-----------------------------
+ejecutable_principal.py
+    Punto de entrada del sistema. Carga los datos, muestra el menú principal
+    y dirige cada opción al módulo correspondiente.
+
+carga_de_datos.py
+    Lee el archivo Excel o CSV, valida columnas, convierte tipos de datos,
+    elimina duplicados, normaliza textos y guarda el CSV procesado.
+
+capacidad_operativa.py
+    Calcula la capacidad diaria, la meta operativa, el promedio de vehículos
+    atendidos y el tiempo promedio utilizado en rampa.
+
+calculo_de_salud.py
+    Presenta el resumen general de salud vehicular y el diagnóstico cruzado
+    por marca.
+
+servicios_secundarios.py
+    Analiza la demanda de llantas nuevas, balanceo y pinchadura. Permite
+    filtrar los resultados por sedan, SUV, 4x4, pick_up o todos.
+
+graficos_e_indicadores.py
+    Genera gráficos de salud general, tiempo en rampa, capacidad operativa,
+    salud por marca, servicios secundarios y movimiento mensual o semanal.
+
+4. REQUISITOS DEL SISTEMA Y DEL SCRIPT
+--------------------------------------
+Requisitos del equipo:
+
+- Windows 10 o superior.
+- Python 3.9 o una versión posterior.
+- PowerShell o una terminal equivalente.
+- Permisos para leer los archivos del proyecto y crear el CSV procesado.
+- Un entorno con salida gráfica para visualizar los gráficos de Matplotlib.
+
+Dependencias de Python:
+
+- pandas: carga, limpieza y análisis de datos.
+- openpyxl: lectura del archivo Excel .xlsx.
+- matplotlib: creación de gráficos.
+
+Instalación de dependencias desde PowerShell:
+
+    py -m pip install pandas openpyxl matplotlib
+
+Si el comando "py" no funciona, utilizar:
+
+    python -m pip install pandas openpyxl matplotlib
+
+El archivo Excel debe contener como mínimo las columnas "fecha" y
+"tiempo_rampa_minutos". Para que todas las opciones funcionen correctamente,
+se recomienda incluir también "marca", "tipo_vehiculo", una columna de
+diagnóstico como "alineacion_exitosa" o "estatus_suspension", y las columnas
+"llantas_nuevas", "balanceo" y "pinchadura".
+
+5. EJECUCIÓN DEL SCRIPT
+-----------------------
+1. Abrir PowerShell.
+2. Entrar en la carpeta principal del proyecto:
+
+    cd "C:\Users\eloyr\OneDrive\Desktop\entrega proyecto final"
+
+3. Ejecutar el programa principal:
+
+   py ejecutable_principal.py  (para iniciar el analisis)
+
+Al iniciar, el programa busca primero "base_datos_taller.xlsx". Si no lo
+encuentra, intenta utilizar "registros_taller_procesado.csv". Cuando la carga
+es exitosa, el sistema procesa los datos y actualiza el CSV. El archivo Excel
+original no se modifica.
+
+6. USO DEL MENÚ PRINCIPAL
+-------------------------
+Cuando aparezca el menú, escribir el número de la opción y presionar ENTER.
+
+[1] Capacidad Operativa y Carga de Rampa
+    Calcula la capacidad teórica diaria, la meta operativa, el promedio de
+    vehículos atendidos por día y el tiempo promedio en rampa.
+
+[2] Resumen General de Salud Vehicular
+    Muestra el total de evaluaciones y el porcentaje de vehículos aprobados,
+    rechazados o sin clasificación.
+
+[3] Diagnóstico de Salud por Marca
+    Presenta una tabla que cruza la marca con el resultado de alineación o el
+    estado de suspensión.
+
+[4] Tipo de Vehículo y Servicios Secundarios
+    Permite analizar todos los vehículos o filtrar por tipo. Después muestra
+    cantidades y porcentajes de los servicios complementarios.
+
+[5] Gráficos de Indicadores Clave
+    Abre un submenú para generar gráficos individuales o todos los gráficos.
+    Para regresar a la consola, cerrar cada ventana gráfica y seleccionar la
+    opción de volver.
+
+[6] Salir
+    Finaliza la ejecución del sistema.
+
+Después de las opciones 1 a 5, responder "s" para realizar otra consulta.
+Para terminar, escribir cualquier respuesta diferente de "s".
+
+7. PROCESO DE LIMPIEZA DE DATOS
+-------------------------------
+El módulo carga_de_datos.py realiza las siguientes tareas:
+
+- Quita espacios innecesarios de los nombres de columnas.
+- Corrige algunos errores conocidos en los encabezados.
+- Elimina registros duplicados.
+- Convierte la columna "fecha" a formato de fecha.
+- Convierte "anio" y "tiempo_rampa_minutos" a valores numéricos.
+- Reemplaza valores numéricos inválidos por cero cuando corresponde.
+- Sustituye textos vacíos por "no_especificado".
+- Quita espacios de los textos y los convierte a minúsculas.
+- Guarda el resultado en "registros_taller_procesado.csv".
+
+8. ERRORES COMUNES Y SOLUCIONES
+-------------------------------
+"No se encontró el archivo"
+    Verificar que "base_datos_taller.xlsx" o el CSV procesado estén en la
+    carpeta principal y que sus nombres sean correctos.
+
+"Import openpyxl failed" o error al leer Excel
+    Instalar las dependencias con el comando indicado en la sección 4.
+
+"No se pudo iniciar el programa"
+    Revisar la instalación de Python 3,11 64bit, pandas, openpyxl y matplotlib.
+
+El programa muestra gráficos pero parece detenido
+    Es normal: cerrar la ventana del gráfico para regresar al menú.
+
+"Faltan columnas requeridas"
+    Revisar que la tabla incluya como mínimo "fecha" y
+    "tiempo_rampa_minutos".
+
+Para actualizar la información, cerrar el programa, reemplazar el archivo de
+datos y ejecutar nuevamente el script. No modificar los datos mientras el
+programa se encuentra en ejecución ya que no veras los cambios reflejados a menos 
+que vuelva a correr el script.
+
+9. ORDEN RECOMENDADO PARA LA DEMOSTRACIÓN
+-----------------------------------------
+1. Presentar el problema y el objetivo del proyecto.
+2. Explicar el origen y las columnas principales de los datos.
+3. Ejecutar el programa y mostrar la carga de datos.
+4. Presentar la capacidad operativa con la opción 1.
+5. Mostrar los resultados de salud con las opciones 2 y 3.
+6. Analizar los servicios secundarios con la opción 4.
+7. Generar gráficos con la opción 5.
+8. Explicar los hallazgos, limitaciones y posibles mejoras.
+
+============================================================
+Muchas gracias por revisar este proyecto y por la oportunidad de presentar
+este trabajo final universitario.
+
+Atentamente,
+
+Adonis Eloy Roman Dinarte
+
+Fin del manual
+============================================================
